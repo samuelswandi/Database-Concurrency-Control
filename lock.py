@@ -22,6 +22,9 @@ class Lock:
         Grant Locks to owner
         but if locks is XL, then can't give locks
         """
+        if owner == self.owner:
+            return True
+            
         if self.type == "XL" and self.owner != "-1":
             print(f"[Locks {self.data}] locks can't be given to {owner}")
             return False
@@ -50,35 +53,5 @@ def searchForLocksByOwner(owner, locks):
             allLocks.append(lock)
 
     return allLocks
-
-def preprocessData():
-    # preprocess case
-    datas = set()
-    queue = []
-
-    # reading case
-    case = open("case.txt", "r")
-    lines = case.read().split(",")
-
-    print("Original case:", lines)
-    print()
-
-    for t in lines:
-        queue.append(t)
-        command = t[0]
-        if command == "C":
-            continue
-        
-        data = t[2]
-        datas.add(data)
-
-    # Declare locks for every data
-    # Default is XL locks
-    locks = []
-    for data in datas:
-        locks.append(Lock(data))
-
-    # return queue, list of transactions and locks
-    return queue, locks
 
     
